@@ -4,9 +4,9 @@ import { Avatar } from './Avatar';
 
 export function Comment({ content, onDeleteComment }) {
     function handleDeleteComment() {
-        onDeleteComment(content);
+        onDeleteComment(content); 
 
-    }
+    } 
     return (
         <div className={styles.comment}>
             <Avatar hasBorder={false} src="https://github.com/keven157751.png" alt="" />
