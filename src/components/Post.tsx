@@ -5,19 +5,24 @@ import { Comment } from './Comment';
 import { Avatar } from './Avatar';
 
 import styles from './Post.module.css';
-import { useState } from 'react';
+import { FormEvent, useState, ChangeEvent } from 'react';
 
 interface Author { 
-    nome: string;
+    name: string;
     role: string;
-    avatarUrl: String;
+    avatarUrl: string;
+ }
+
+ interface Content {
+    // map(arg0: (line: any) => import("react/jsx-runtime").JSX.Element | undefined): import("react").ReactNode;
+    type: 'paragraph' | 'link';
+    content: string;
  }
 
  interface PostProps {
     author: Author;
     publishedAt: Date;
-    content: string
-
+    content: Content[];
  }
 
 export function Post({ author, publishedAt, content }: PostProps) {
@@ -36,7 +41,7 @@ export function Post({ author, publishedAt, content }: PostProps) {
         addSuffix: true,
     })
 
-    function handleCreateNewComment(event) {
+    function handleCreateNewComment(event: FormEvent) {
         event.preventDefault()
 
         setComments([...comments, newCommentText]);
@@ -45,11 +50,12 @@ export function Post({ author, publishedAt, content }: PostProps) {
 
     // function handleCreateNewComment(textarea) { }
 
-    function handleNewCommentChange(event) {
+    function handleNewCommentChange(event: ChangeEvent<HTMLTextAreaElement>) {
         setNewCommentText(event.target.value);
     }
 
-    function deleteComment(commentToDelete,) {
+    function deleteComment(commentToDelete: String) {
+
         const commentsWithoutDeletedOne = comments.filter(comment => {
             return comment != commentToDelete;
         })
@@ -63,7 +69,7 @@ export function Post({ author, publishedAt, content }: PostProps) {
                 <div className={styles.author}>
                     <Avatar src={author.avatarUrl} />
                     <div className={styles.authorInfo}>
-                        <strong>{author.nome}</strong>
+                        <strong>{author.name}</strong>
                         <span>{author.role}</span>
                     </div>
                 </div>
